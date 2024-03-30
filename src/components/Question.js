@@ -1,34 +1,40 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import questions from '../content/data';
+import { useSelector } from 'react-redux'
+
+// import custom hook for fetching questions
+import { useFetchQuestions } from '../hooks/FetchQuestions'
 
 export default function Questions() {
 
     const [selectedOption, setSelectedOption] = useState('');
-
-   
-    const question = questions[0] // TODO: handle all questions instead of taking 1st
-    useEffect(() => {
-        console.log(question)
-        console.log("question.id", question.id)
-    })
+    const [{isLoading, apiData, serverError}] = useFetchQuestions()
     
+    // select question from all questions based on the orded specified in the state
+    const question  = useSelector(state => state.questions.queue[state.questions.order])
+
+    useEffect(() => {
+      console.log("questions is", question)
+    })
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.value);
       };
 
+
+      if (isLoading) return <h3>Questions Are Loading!</h3>
+      if (serverError) return <h3>{serverError || "Unknown Error Occured!"} </h3>
       
 
   return (
     <div className='questions'>
-        <h2>{question.question}</h2>
+        <h2>{question?.question}</h2>
         
         {/* iterate over each question options and display it as a list*/}
-        <ul key={question.id} style={{ listStyle: 'none' }}>
+        <ul key={question?.id} style={{ listStyle: 'none' }}>
             
             {
-                question.options.map((q, i) => (
+                question?.options.map((q, i) => (
                     <li key={i}>
                         <input 
                         type="radio" 
