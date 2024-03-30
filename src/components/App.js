@@ -1,14 +1,25 @@
 import '../styles/App.css'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 
+// import components
+import Main from './Main';
+import CitizenshipTest from './CitizenshipTest';
+import Result from './Result';
 
 // routes
 const router = createBrowserRouter([
   {
     path : '/',
-    element : <div>Root Element</div>
+    element : <Main/>
   },
-
+  {
+    path : '/citizenshiptest',
+    element : <CitizenshipTest/>
+  },
+  {
+    path : '/result',
+    element : <Result/>
+  }
 ])
 
 
