@@ -10,7 +10,7 @@ body, html {
     grid-template-rows: 1fr 2fr; /* 1/3 for the image, 2/3 for the content */
   }
   
-  .image-section {
+  .german-flag-section {
     /* Adjust this to properly display your image */
     background-image: url('../../public/images/Flag_of_Germany.svg.png'); /* Adjust the path accordingly */
     background-size: contain;

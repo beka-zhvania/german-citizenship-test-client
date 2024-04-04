@@ -34,38 +34,44 @@ export default function Result() {
   useStoreResult({username : "test user", result : result, correctanswers : testResult})
 
   return (
-    <div className='container'>
-      <h1 className='title'>Citizenship Test</h1>
-
-      <div className='result'>
-      <div>
-          <span>Username</span>
-          <span>test user</span>
-        </div>
-        <div>
-          <span>Correct Answers</span>
-          <span>{calculateResult()}</span>
-        </div>
-        <div>
-          <span>Total Questions</span>
-          <span>{result.length}</span>
-        </div>
-        <div>
-          <span>Test Result</span>
-          <span style={{color : `${testResult ? "green" : "red"}`}}>{testResult ? "Passed" : "Failed"}</span>
-        </div>
-
-      </div>
-
-      {/* button to restart the test */}
-      <div className='start'>
-        <Link className='btn' to={'/'} onClick={onRestart}>Restart</Link>
+    <>
+      <div className="german-flag-section">
+        {/* Placeholder for german flag on top of the page */}
       </div>
 
       <div className='container'>
-        {/* result table for the test results */}
-        {/* <ResultTable></ResultTable> */}
+        <h1 className='title'>Citizenship Test</h1>
+
+        <div className='result'>
+        <div>
+            <span>Username</span>
+            <span>test user</span>
+          </div>
+          <div>
+            <span>Correct Answers</span>
+            <span>{calculateResult()}</span>
+          </div>
+          <div>
+            <span>Total Questions</span>
+            <span>{result.length}</span>
+          </div>
+          <div>
+            <span>Test Result</span>
+            <span style={{color : `${testResult ? "green" : "red"}`}}>{testResult ? "Passed" : "Failed"}</span>
+          </div>
+
+        </div>
+
+        {/* button to restart the test */}
+        <div className='start'>
+          <Link className='btn' to={'/'} onClick={onRestart}>Restart</Link>
+        </div>
+
+        <div className='container'>
+          {/* result table for the test results */}
+          {/* <ResultTable></ResultTable> */}
+        </div>
       </div>
-    </div>
+    </>
   )
 }

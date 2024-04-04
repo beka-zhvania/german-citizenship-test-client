@@ -102,8 +102,8 @@ export default function CitizenshipTest() {
   const progressBarWidth = `${(order+1)/queue.length * 100}%`
   return (
     <>
-      <div className="image-section">
-          {/* Placeholder for image on top of the page */}
+      <div className="german-flag-section">
+          {/* Placeholder for german flag on top of the page */}
       </div>
 
       <div className='container'>

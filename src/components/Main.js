@@ -8,7 +8,7 @@ export default function Main() {
 
   return (
     <>
-        <div className="image-section">
+        <div className="german-flag-section">
             {/* Placeholder for image */}
         </div>
         <div className='container'>

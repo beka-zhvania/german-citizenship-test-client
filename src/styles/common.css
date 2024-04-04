@@ -3,7 +3,7 @@ body, html {
     margin: 0;
   }
 
-  .image-section {
+  .german-flag-section {
     /* Adjust this to properly display your image */
     background-image: url('../../public/images/Flag_of_Germany.svg.png'); /* Adjust the path accordingly */
     background-size: contain;
