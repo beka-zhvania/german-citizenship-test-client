@@ -5,6 +5,7 @@ import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import Main from './Main';
 import CitizenshipTest from './CitizenshipTest';
 import Result from './Result';
+import { getDataFromDB } from '../util/dataFetcher';
 
 // routes
 const router = createBrowserRouter([

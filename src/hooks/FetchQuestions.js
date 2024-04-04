@@ -1,61 +1,40 @@
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import questionData from '../content/data'
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { startExamination, moveNextAction, movePrevAction } from '../redux/question_reducer';
+import { getDataFromDB } from '../util/dataFetcher';
 
-// import redux action used in useDispatch
-import * as Actions from '../redux/question_reducer'
-
-// custom hook to fetch question data and set value to store
 export const useFetchQuestions = () => {
     const dispatch = useDispatch();
-    const [ getData, setGetData ] = useState({isLoading: false, apiData : [], serverError : null})
+    const [data, setData] = useState({ isLoading: false, questions: [], answers: [], error: null });
 
     useEffect(() => {
-        setGetData(prev => ({...prev, isLoading : true}));
-
-        // async function to fetch questions
-        (async () => {
+        const fetchData = async () => {
+            setData({ ...data, isLoading: true });
             try {
-                let questions = await questionData;
 
+                // fetch questions and answers from the database 
+                const [{questions, answers}] = await getDataFromDB(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`);
                 if (questions.length > 0) {
-                    setGetData(prev => ({
-                        ...prev,
-                        isLoading : false,
-                        apiData : questions,
-                        serverError: null // Reset serverError when data is fetched successfully
-                    }));
-                    dispatch(Actions.startExamination(questions));
+                    dispatch(startExamination({ questions, answers }));
+                    setData({ ...data, isLoading: false, questions, answers });
                 } else {
-                    throw new Error("Question list length is empty.");
+                    throw new Error("No questions found.");
                 }
             } catch (error) {
-                setGetData(prev => ({
-                    ...prev,
-                    isLoading : false,
-                    serverError : error // Update serverError when there's an error
-                }));
+                setData({ ...data, isLoading: false, error: error.message });
             }
-        })();
+        };
+
+        fetchData();
     }, [dispatch]);
+    //console.log("returning data in FetchQuestions.js", data)//TODO:DELETE
+    return data;
+};
 
-    return [getData, setGetData]
-}
+export const moveNextQuestion = () => (dispatch) => {
+    dispatch(moveNextAction());
+};
 
-// dispatch function to move to next question
-export const MoveNextQuestion = () => async(dispatch) => {
-    try {
-        dispatch(Actions.moveNextAction()) // increase order of questions by 1
-    } catch (error) {
-        console.log(error)
-    }
-}
-
-// dispatch function to move to previous question
-export const MovePrevQuestion = () => async(dispatch) => {
-    try {
-        dispatch(Actions.movePrevAction()) // decrease order of questions by 1
-    } catch (error) {
-        console.log(error)
-    }
-}
+export const movePrevQuestion = () => (dispatch) => {
+    dispatch(movePrevAction());
+};
