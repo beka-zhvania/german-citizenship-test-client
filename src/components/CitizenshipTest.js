@@ -99,7 +99,7 @@ export default function CitizenshipTest() {
 
 
 
-  const progressBarWidth = `${(order+1)/queue.length * 100}%`
+  const progressBarWidth = `${(order)/queue.length * 100}%`
   return (
     <>
       <div className="german-flag-section">

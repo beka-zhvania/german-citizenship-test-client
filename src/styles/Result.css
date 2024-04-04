@@ -1,0 +1,50 @@
+/* General Styles */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  .title {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+/* Updated Result Section with Flexbox for alignment */
+.result div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .result span {
+    /* Removing min-width and adjusting for flex display */
+    font-weight: 500;
+  }
+  
+  
+  .result span {
+    display: inline-block;
+    min-width: 120px;
+    font-weight: 500;
+  }
+  
+  /* Button Styles */
+  .btn {
+    display: inline-block;
+    text-align: center;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #0056b3;
+  }
+  
+  .restart {
+    margin: 50px;
+  }
