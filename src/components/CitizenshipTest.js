@@ -19,6 +19,7 @@ export default function CitizenshipTest() {
   }));
   const [redirectToResult, setRedirectToResult] = useState(false); // Added state for redirection
   const dispatch = useDispatch();
+  const [progressBarValue, setProgressBarValue] = useState(0);
 
   
   const state = useSelector(state => state)
@@ -29,6 +30,11 @@ export default function CitizenshipTest() {
     dispatch(resetResultAction());
   }, [dispatch]);
 
+  // Update progress bar whenever user selects an answer
+  useEffect(() => {
+    const nonNullResultcount = result.filter(value => value !== null).length
+    setProgressBarValue(nonNullResultcount)
+  }, [result,selected, order, queue])
 
   function onSelected(selected) {
     setSelected(selected)
@@ -37,9 +43,8 @@ export default function CitizenshipTest() {
 
   // next question button event handler
   function onNext(){
-    //console.log("on next click", `order=${order} queue.length=${queue.length}`)//TODO:DELETE
     // handle answer submission or skipping for the current question
-    if (result.length <= order) {
+    if (result.length <= order ) {
       // if the user selected an answer, push it; otherwise, push a default value 
       dispatch(pushAnswer(selected !== undefined ? selected : null));
     }
@@ -54,8 +59,9 @@ export default function CitizenshipTest() {
         dispatch(moveNextQuestion());
     }
 
-      // if answer was not selected, it should be undefined
-    setSelected(undefined)
+      // if answer was not selected, it should be null
+    setSelected(null)
+    console.log("result", result);//TODO:DELETE
 
   }
 
@@ -98,8 +104,10 @@ export default function CitizenshipTest() {
   }
 
 
+  // calculate percentage string of progress bar width
+  const progressBarWidth = `${(progressBarValue)/queue.length * 100}%`;
 
-  const progressBarWidth = `${(order)/queue.length * 100}%`
+
   return (
     <>
       <div className="german-flag-section">
@@ -118,7 +126,7 @@ export default function CitizenshipTest() {
 
         <div className='button-container'>
           { order > 0 ? <button className='btn btn-primary back' onClick={onBack}>Back</button> : <div></div>}
-          <button className='btn btn-primary next' onClick={onNext}>Next</button>
+          <button className='btn btn-primary next' onClick={onNext}>{order === queue.length - 1 ? "Submit" : "Next"}</button>
         </div>
       </div>
     </>
