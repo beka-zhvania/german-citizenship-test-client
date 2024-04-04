@@ -5,7 +5,7 @@ import { resetQuestionsAction } from '../redux/question_reducer'
 import { resetResultAction } from '../redux/result_reducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { useStoreResult } from '../hooks/setResult'
-
+import '../styles/page_with_flag.css'
 
 export default function Result() {
 
@@ -20,18 +20,21 @@ export default function Result() {
 
 
 
-  // calculate if test is passed
+  // caunt true values
   const countTrueValues = arr => arr.filter(Boolean).length;
-  function calculateResult(){
-    const correctAnswers = result.map((selectedAnswer, i) => answers[i] === selectedAnswer)
-    return (countTrueValues(correctAnswers) > 3 ? true : false)
-  }
-  const testResult = calculateResult()
-  console.log("result is" ,testResult)//TODO:DELETE
+
+  // check for each question if it is answered correctly
+  const answerCorrectnessArray = result.map((selectedAnswer, i) => answers[i] === selectedAnswer)
+
+
+  const correctAnswerCount = countTrueValues(answerCorrectnessArray)
+  const pass = correctAnswerCount > Math.ceil(queue.length/2) ? true : false
   
-  console.log("printing result", result)//TODO:DELETE
+
+  console.log("correctAnswersArray", correctAnswerCount, "resultBoolean",pass)
   // store result
-  useStoreResult({username : "test user", result : result, correctanswers : testResult})
+  useStoreResult({username : "test user", result : result, correctAnswers : correctAnswerCount, pass : pass})
+
 
   return (
     <>
@@ -49,7 +52,7 @@ export default function Result() {
           </div>
           <div>
             <span>Correct Answers</span>
-            <span>{calculateResult()}</span>
+            <span>{correctAnswerCount}</span>
           </div>
           <div>
             <span>Total Questions</span>
@@ -57,7 +60,7 @@ export default function Result() {
           </div>
           <div>
             <span>Test Result</span>
-            <span style={{color : `${testResult ? "green" : "red"}`}}>{testResult ? "Passed" : "Failed"}</span>
+            <span style={{color : `${pass ? "green" : "red"}`}}>{pass ? "Passed" : "Failed"}</span>
           </div>
 
         </div>

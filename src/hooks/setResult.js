@@ -30,9 +30,6 @@ export const updateResultsBulk = (results) => async (dispatch) => {
 export const useStoreResult = (resultData) => {
 
     const { result, username } = resultData;
-    console.log("result", result);//TODO:DELETE
-    console.log("resultData.result", resultData.result);
-    console.log("result != []", result != []);
     (async () => {
         try {
             if (result.length === 0) {
