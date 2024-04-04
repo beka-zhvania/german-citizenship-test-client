@@ -98,14 +98,20 @@ export default function CitizenshipTest() {
   }
 
 
+
+  const progressBarWidth = `${(order+1)/queue.length * 100}%`
   return (
     <>
       <div className="image-section">
           {/* Placeholder for image on top of the page */}
       </div>
-      <div className="progress">
-      </div>
+
       <div className='container'>
+        <div className="progress">
+          <div className="progress-bar" role="progressbar" style={{width: progressBarWidth}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+            {progressBarWidth}
+          </div>
+        </div>
         <h1 className='title'>Citizenship Test</h1>
 
         <Questions className='question-component' onSelected={onSelected} />
