@@ -1,0 +1,37 @@
+
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically centers the content in the container */
+    align-items: center; /* Horizontally centers the content in the container */
+    text-align: center; /* Ensures the text inside the container is centered */
+  }
+
+
+  ol {
+    /* remove numbering on list items */
+    list-style-type: none;
+  }
+  
+  .title {
+    /* add space between title and explanation */
+    margin-bottom: 10px;
+  }
+
+/* start button */
+.start {
+    background-color: #007bff; /* Bootstrap primary color for consistency */
+    color: white; /* Text color */
+    text-decoration: none; /* Removes underline from link */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* No border */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
+  
+  .start:hover, .start:focus {
+    background-color: #0056b3; /* Darker shade on hover/focus */
+    color: white; /* Keeps text color white */
+    text-decoration: none; /* Ensures no underline appears on hover */
+  }
+  

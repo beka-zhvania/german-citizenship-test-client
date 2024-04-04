@@ -1,0 +1,13 @@
+body, html {
+    height: 100%;
+    margin: 0;
+  }
+
+  .image-section {
+    /* Adjust this to properly display your image */
+    background-image: url('../../public/images/Flag_of_Germany.svg.png'); /* Adjust the path accordingly */
+    background-size: contain;
+    background-position: center;
+    min-height: 200px;
+    margin-bottom: 20px;
+  }
