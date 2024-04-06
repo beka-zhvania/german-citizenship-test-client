@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Questions from './Questions'
 import { useSelector, useDispatch } from 'react-redux'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { moveNextQuestion, movePrevQuestion } from '../hooks/FetchQuestions'
 import { pushAnswer, updateResultsBulk } from '../hooks/setResult'
 import { resetResultAction } from '../redux/result_reducer';
@@ -23,12 +23,17 @@ export default function CitizenshipTest() {
   const [timer, setTimer] = useState(3600); // time in seconds for the test duration
   const totalDuration = 3600;
 
+  // selected German federal state for the test 
+  const location = useLocation();
+  const { selectedState } = location.state || { selectedState: "Bayern" }; // use Bayern as default value if state not provided
+
   
   const state = useSelector(state => state)
 
 
   // Reset result array when component mounts. dispatch function shouldn't change so this is equivalent to []
   useEffect(() => {
+    //console.log("selected state is ", selectedState)//TODO:DELETE
     dispatch(resetResultAction());
   }, [dispatch]);
 
@@ -162,7 +167,7 @@ export default function CitizenshipTest() {
           </div>
           <h1 className='title'>Citizenship Test</h1>
 
-          <Questions className='question-component' onSelected={onSelected} />
+          <Questions className='question-component' onSelected={onSelected} federalState={selectedState}/>
 
           <div className='button-container'>
             { order > 0 ? <button className='btn btn-primary back' onClick={onBack}>Back</button> : <div></div>}

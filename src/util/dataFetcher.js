@@ -2,10 +2,19 @@ import axios from 'axios'
 
 
 
-export async function getDataFromDB(url) {
+export async function getDataFromDB(url, federalState) {
     try {
-        const response = await axios.get(url);
-        console.log('response.data', response.data)//TODO:DELETE
+
+
+        // Create a query object if federalState is provided or use Berlin as a default
+        const query = federalState ? { state: federalState } : { state : "Berlin"};
+
+        // Construct the query string from the query object
+        const queryString = new URLSearchParams(query).toString();
+        const fullUrl = queryString ? `${url}?${queryString}` : url;
+
+        const response = await axios.get(fullUrl);
+        //console.log('response.data', response.data)
         return response.data; 
     } catch (error) {
         console.error('Error fetching data:', error);

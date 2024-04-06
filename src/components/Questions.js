@@ -8,12 +8,12 @@ import { updateResult } from '../hooks/setResult'
 
 import '../styles/Questions.css'
 
-export default function Questions({ onSelected }) {
+export default function Questions({ onSelected,federalState}) {
 
     const dispatch = useDispatch()
     const { order } =  useSelector(state => state.questions)
     const resultArray = useSelector(state => state.result.result)
-    const {questions } = useFetchQuestions();
+    const {questions} = useFetchQuestions(federalState);
     const state = useSelector(state => state)
     let answerToDisplaySelected = resultArray.length > order ? resultArray[order] : '';
     const [selectedOption, setSelectedOption] = useState(answerToDisplaySelected);
@@ -38,7 +38,7 @@ export default function Questions({ onSelected }) {
         dispatch(updateResult({order, selectedOption}))
       };
 
-      
+
     return (
         <div className="container mt-sm-2 my-1">
 
