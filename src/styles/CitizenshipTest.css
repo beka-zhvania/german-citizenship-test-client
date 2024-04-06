@@ -16,3 +16,24 @@
   .progress-bar {
     width: 100%; /* Start with full width to test if it fills the container */
   }
+
+
+
+  .below-flag-section {
+    display: flex;
+    justify-content: center;
+    align-items: start; /* Align items at the start of the cross axis */
+    padding: 20px; /* Optional: Add some spacing */
+  }
+  
+  .container {
+    /* Ensure the container keeps its centered position and doesn't stretch */
+    max-width: 600px; /* Adjust based on your design */
+  }
+  
+  .timer-display {
+    margin-left: 20px; /* Space between container and timer */
+    padding: 10px; /* Optional: For better visibility */
+    align-self: flex-start; /* Aligns timer to the start of the container */
+  }
+  

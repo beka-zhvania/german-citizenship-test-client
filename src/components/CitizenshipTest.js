@@ -20,6 +20,8 @@ export default function CitizenshipTest() {
   const [redirectToResult, setRedirectToResult] = useState(false); // Added state for redirection
   const dispatch = useDispatch();
   const [progressBarValue, setProgressBarValue] = useState(0);
+  const [timer, setTimer] = useState(3600); // time in seconds for the test duration
+  const totalDuration = 3600;
 
   
   const state = useSelector(state => state)
@@ -39,6 +41,43 @@ export default function CitizenshipTest() {
   function onSelected(selected) {
     setSelected(selected)
   }
+
+  // Timer logic separated to avoid conflicts and ensure cleanup
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer(prevTimer => {
+        if (prevTimer === 1) {
+          clearInterval(interval); // Ensure cleanup
+          setRedirectToResult(true); // This will now trigger the redirection in a separate useEffect
+        }
+        return prevTimer - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, []);
+
+  // re-render everything before submitting the answers and also fill in skipped questions
+  // without this final re-render the result array might be incomplete at the time of submission
+  useEffect(() => {
+    if (redirectToResult) {
+      fillSkippedQuestions();
+    }
+  }, [redirectToResult]); // Listening for changes to redirectToResult
+
+
+  // variables and methods needed for displaying time in a circular countdown
+  const formatTime = () => {
+    const minutes = Math.floor(timer / 60);
+    const seconds = timer % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  };
+  // Calculate stroke-dashoffset for the circular progress
+  const strokeDashoffset = ((timer / totalDuration) * 283).toFixed(2); // 283 is the circle's circumference
+  // Calculate the percentage of time left
+  const timeLeftPercentage = (timer / totalDuration) * 100;
+  // Determine the color based on the time left
+  const timerColor = timeLeftPercentage <= 20 ? 'red' : 'green';
 
 
   // next question button event handler
@@ -114,21 +153,34 @@ export default function CitizenshipTest() {
           {/* Placeholder for german flag on top of the page */}
       </div>
 
-      <div className='container'>
-        <div className="progress">
-          <div className="progress-bar" role="progressbar" style={{width: progressBarWidth}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-            {progressBarWidth}
+      <div className="below-flag-section">
+        <div className='container'>
+          <div className="progress">
+            <div className="progress-bar" role="progressbar" style={{width: progressBarWidth}} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+              {progressBarWidth}
+            </div>
+          </div>
+          <h1 className='title'>Citizenship Test</h1>
+
+          <Questions className='question-component' onSelected={onSelected} />
+
+          <div className='button-container'>
+            { order > 0 ? <button className='btn btn-primary back' onClick={onBack}>Back</button> : <div></div>}
+            <button className='btn btn-primary next' onClick={onNext}>{order === queue.length - 1 ? "Submit" : "Next"}</button>
           </div>
         </div>
-        <h1 className='title'>Citizenship Test</h1>
 
-        <Questions className='question-component' onSelected={onSelected} />
-
-        <div className='button-container'>
-          { order > 0 ? <button className='btn btn-primary back' onClick={onBack}>Back</button> : <div></div>}
-          <button className='btn btn-primary next' onClick={onNext}>{order === queue.length - 1 ? "Submit" : "Next"}</button>
+        {/* Circular Timer Display with dynamic color */}
+        <div className='timer-display'>
+          <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="#eee" strokeWidth="10"/>
+            <circle cx="50" cy="50" r="45" fill="none" stroke={timerColor} strokeWidth="10"
+              strokeDasharray="283" strokeDashoffset={283 - strokeDashoffset} transform="rotate(-90 50 50)"/>
+            <text x="50%" y="54%" textAnchor="middle" stroke="#000" strokeWidth="0.5px" dy=".3em">{formatTime()}</text>
+          </svg>
         </div>
+
       </div>
     </>
-  )
+  );
 }
