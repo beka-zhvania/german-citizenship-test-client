@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { startExamination, moveNextAction, movePrevAction } from '../redux/question_reducer';
 import { getDataFromDB } from '../util/dataFetcher';
 
-export const useFetchQuestions = (federalState) => {
+export const useFetchQuestions = (federalState, commonQuestionIndices, stateSpecificQuestionIndices) => {
     const dispatch = useDispatch();
     const [data, setData] = useState({ isLoading: false, questions: [], answers: [], error: null });
 
@@ -20,9 +20,17 @@ export const useFetchQuestions = (federalState) => {
                 // fetch common questions/answers from database
                 const [{questions : commonQuestions, answers : commonAnswers}] = await getDataFromDB(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`, "Common");
 
+                // filter common questions based on specified indices
+                const filteredCommonQuestions = commonQuestionIndices.map(index => commonQuestions[index]);
+                const filteredCommonAnswers = commonQuestionIndices.map(index => commonAnswers[index]);
+
+                // filter state specific questions based on specified indices
+                const filteredStateSpecificQuestions = stateSpecificQuestionIndices.map(index => stateSpecificQuestions[index]);
+                const filteredStateSpecificAnswers = stateSpecificQuestionIndices.map(index => stateSpecificAnswers[index]);
+
                 //Combine the questions and answers
-                const combinedQuestions = commonQuestions.concat(stateSpecificQuestions);
-                const combinedAnswers = commonAnswers.concat(stateSpecificAnswers);
+                const combinedQuestions = filteredCommonQuestions.concat(filteredStateSpecificQuestions);
+                const combinedAnswers = filteredCommonAnswers.concat(filteredStateSpecificAnswers);
 
                 if (combinedQuestions.length > 0) {
                     dispatch(startExamination({ questions : combinedQuestions, answers : combinedAnswers }));
@@ -37,7 +45,7 @@ export const useFetchQuestions = (federalState) => {
 
         fetchData();
     }, [dispatch]);
-    console.log("returning data in FetchQuestions", data)
+    //console.log("returning data in FetchQuestions", data)
     return data;
 };
 

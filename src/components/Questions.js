@@ -13,8 +13,13 @@ export default function Questions({ onSelected,federalState}) {
     const dispatch = useDispatch()
     const { order } =  useSelector(state => state.questions)
     const resultArray = useSelector(state => state.result.result)
-    const {questions} = useFetchQuestions(federalState);
+    const { commonQuestionIndices, stateSpecificQuestionIndices } = useSelector(state => state.citizenshipTest)
+    const {questions} = useFetchQuestions(federalState, commonQuestionIndices, stateSpecificQuestionIndices);
     const state = useSelector(state => state)
+
+
+
+    // option to display as selected
     let answerToDisplaySelected = resultArray.length > order ? resultArray[order] : '';
     const [selectedOption, setSelectedOption] = useState(answerToDisplaySelected);
     
@@ -39,6 +44,7 @@ export default function Questions({ onSelected,federalState}) {
       };
 
 
+    
     return (
         <div className="container mt-sm-2 my-1">
 
