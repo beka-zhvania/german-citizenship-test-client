@@ -9,10 +9,25 @@
   }
 
 
-  ol {
-    /* remove numbering on list items */
-    list-style-type: none;
-  }
+ol {
+  list-style-type: none; /* Removes default list numbering */
+  padding: 0; /* Removes default padding */
+  margin: 20px 0; /* Adds vertical space around the list */
+}
+
+ol li {
+  padding: 8px 0; /* Adds vertical padding for spacing between items */
+  font-size: 16px; /* Sets a comfortable reading font size */
+}
+
+ol li:not(:last-child) {
+  border-bottom: 1px solid #ddd; /* Adds a subtle line between items */
+}
+
+ol li:hover {
+  background-color: #f8f9fa; /* Adds a very subtle hover effect */
+}
+
   
   .title {
     /* add space between title and explanation */
@@ -35,3 +50,37 @@
     text-decoration: none; /* Ensures no underline appears on hover */
   }
   
+/* federal state selection drop down  */
+.state-dropdown {
+  padding: 5px 10px; /* Adds space inside the dropdown, making it easier to read */
+  border: 1px solid #007bff; /* Adds a border with a color that matches the start button */
+  border-radius: 5px; /* Rounds the corners of the dropdown to match the button style */
+  font-size: 16px; /* Increases the font size for better readability */
+  background-color: white; /* Sets a white background for the dropdown */
+  cursor: pointer; /* Changes the cursor to a pointer to indicate it's clickable */
+  outline: none; /* Removes the default focus outline to be replaced with a custom one */
+  margin-bottom: 20px; /* Adds space below the dropdown to separate it from the next element */
+}
+
+.state-dropdown:hover {
+  border-color: #0056b3; /* Changes the border color on hover for visual feedback */
+}
+
+.state-dropdown:focus {
+  border-color: #0056b3; /* Changes the border color when focused for accessibility */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adds a glow effect to indicate focus */
+}
+
+/* Optional: Style the dropdown options for consistency */
+.state-dropdown option {
+  padding: 10px; /* Adds padding to the options for a better click area and readability */
+}
+
+.dropdown-label {
+  margin-top:20px;
+  margin-bottom: 8px; /* Adds a small space between the label and the dropdown */
+  font-size: 16px; /* Sets the font size to match your dropdown */
+  color: #333; /* Sets the text color */
+  font-weight: bold; /* Makes the label text slightly bolder */
+  display: block; /* Ensures the label is on its own line above the dropdown */
+}

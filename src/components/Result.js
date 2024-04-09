@@ -16,12 +16,12 @@ export default function Result() {
   } = useSelector((state) => state);
 
   function onRestart() {
-    console.log("restarting the test");
+    //console.log("restarting the test");
     dispatch(resetQuestionsAction());
     dispatch(resetResultAction());
   }
 
-  // caunt true values
+  // count true values
   const countTrueValues = (arr) => arr.filter(Boolean).length;
 
   // check for each question if it is answered correctly
@@ -46,42 +46,36 @@ export default function Result() {
         {/* Placeholder for german flag on top of the page */}
       </div>
 
-      <div className="container">
-        <h1 className="title">Citizenship Test</h1>
+      <div className="result-container"> 
+        <h1 className="result-title">Einbürgerungstest</h1> 
 
-        <div className="result">
+        <div className="result-details"> 
           <div>
-            <span>Username</span>
-            <span>test user</span>
-          </div>
-          <div>
-            <span>Total Questions</span>
+            <span>Anzahl der Testfragen</span>
             <span>{result.length}</span>
           </div>
           <div>
-            <span>Correct Answers</span>
+            <span>Richtige Antworten</span>
             <span>{correctAnswerCount}</span>
           </div>
 
           <div>
-            <span>Test Result</span>
+            <span>Testergebnis</span>
             <span style={{ color: `${pass ? "green" : "red"}` }}>
-              {pass ? "Passed" : "Failed"}
+              {pass ? "Bestanden" : "Nicht Bestanden"}
             </span>
           </div>
         </div>
 
-        {/* button to restart the test */}
-        <div className="start restart">
-          <Link className="btn" to={"/"} onClick={onRestart}>
-            Restart
+        <div className="result-restart"> 
+          <Link className="result-btn" to={"/"} onClick={onRestart}> 
+            Neustart
           </Link>
         </div>
 
-        <div className="container">
-          {/* result table for the test results */}
-          {/* <ResultTable></ResultTable> */}
-        </div>
+
+        {/* <ResultTable></ResultTable> */}
+
       </div>
     </>
   );

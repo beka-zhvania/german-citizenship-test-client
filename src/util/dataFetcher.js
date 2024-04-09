@@ -25,7 +25,7 @@ export async function getDataFromDB(url, federalState) {
 export async function postDataToDB(url, data) {
     try {
         const response = await axios.post(url, data);
-        console.log("posting", data, "to", url)//TODO:DELETE
+        //console.log("posting", data, "to", url)//TODO:DELETE
         return response.data; 
     } catch (error) {
         console.error('Error posting data:', error);

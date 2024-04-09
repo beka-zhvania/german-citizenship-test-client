@@ -105,18 +105,18 @@ export default function CitizenshipTest() {
 
       // if answer was not selected, it should be null
     setSelected(null)
-    console.log("result", result);//TODO:DELETE
+    //console.log("result", result);//TODO:DELETE
 
   }
 
   // going back to previous question button event handler
   function onBack(){
-    console.log("on back click")
+    //console.log("on back click")
     if (order > 0){
 
       // insert new answer to result array
       if (result.length <= order) {
-        console.log("in onBack. Calling pushAnswer with " + selected)//TODO:DELETE
+        //console.log("in onBack. Calling pushAnswer with " + selected)//TODO:DELETE
         dispatch(pushAnswer(selected))
       }
 
@@ -143,13 +143,13 @@ export default function CitizenshipTest() {
    
   // end of the test when all answers are selected and next button is clicked
   if (redirectToResult ) {
-    console.log("state before submitting answers", state)//TODO:DELETE
+    //console.log("state before submitting answers", state)//TODO:DELETE
     return  <Navigate to={'/result'} replace={true}></Navigate>
   }
 
 
   // calculate percentage string of progress bar width
-  const progressBarWidth = `${(progressBarValue)/queue.length * 100}%`;
+  const progressBarWidth = `${Math.round((progressBarValue)/queue.length * 100)}%`;
 
 
   return (
@@ -165,13 +165,13 @@ export default function CitizenshipTest() {
               {progressBarWidth}
             </div>
           </div>
-          <h1 className='title'>Citizenship Test</h1>
+          <h1 className='title'>Einbürgerungstest</h1>
 
           <Questions className='question-component' onSelected={onSelected} federalState={selectedState}/>
 
           <div className='button-container'>
-            { order > 0 ? <button className='btn btn-primary back' onClick={onBack}>Back</button> : <div></div>}
-            <button className='btn btn-primary next' onClick={onNext}>{order === queue.length - 1 ? "Submit" : "Next"}</button>
+            { order > 0 ? <button className='btn btn-primary back' onClick={onBack}>&lt; </button> : <div></div>}
+            <button className='btn btn-primary next' onClick={onNext}>{order === queue.length - 1 ? "Abgeben" : ">"}</button>
           </div>
         </div>
 

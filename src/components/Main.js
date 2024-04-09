@@ -39,23 +39,32 @@ export default function Main() {
                 {/* Placeholder for image */}
             </div>
             <div className='container'>
-                <h1 className='title'>German Citizenship Test Practice</h1>
+                <h1 className='title'>Probetest zum Einbürgerungstest</h1>
                 <ol>
-                    <li>You will be asked 33 questions for German citizenship application</li>
-                    <li>Every question has equal weight</li>
-                    <li>Every question has a single correct answer</li>
-                    <li>Questions can be answered in any order</li>
+                    <li>Es werden Ihnen 33 Fragen gestellt.</li>
+                    <li>Sie haben 60 Minuten Zeit, um den Test zu absolvieren.</li>
+                    <li>Sie benötigen 17 oder mehr richtige Antworten, um zu bestehen.</li>
+                    <li>Jede Frage hat eine einzige richtige Antwort.</li>
+                    <li>Die Fragen können in beliebiger Reihenfolge beantwortet werden.</li>
+                    <li>Achtung: Dieser Test dient Übungszwecken und könnte Fehler enthalten.</li>
                 </ol>
-                
-                <select value={selectedState} onChange={e => updateSelectedState(e.target.value)} className='state-dropdown'>
-                    <option value="">Select a German State</option>
+
+                <label htmlFor="stateDropdown" className="dropdown-label">Bitte wählen Sie das Bundesland</label>
+                <select
+                id="stateDropdown"
+                value={selectedState}
+                onChange={e => updateSelectedState(e.target.value)}
+                className='state-dropdown'
+                >
+                    <option value="">Wählen Sie ein Bundesland</option>
                     {germanStates.map(state => (
                         <option key={state} value={state}>{state}</option>
                     ))}
                 </select>
 
+
                 <div className='start'>
-                    <button className='btn' onClick={handleStartClick}>Start Citizenship Test</button>
+                    <button className='btn' onClick={handleStartClick}>Einbürgerungstest Starten</button>
                 </div>
             </div>
         </>
