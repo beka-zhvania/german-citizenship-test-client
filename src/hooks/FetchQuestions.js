@@ -14,11 +14,13 @@ export const useFetchQuestions = (federalState, commonQuestionIndices, stateSpec
 
             try {
 
-                // fetch state specific questions/answers from database
-                const [{questions : stateSpecificQuestions, answers : stateSpecificAnswers}] = await getDataFromDB(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`, federalState);
-                
-                // fetch common questions/answers from database
-                const [{questions : commonQuestions, answers : commonAnswers}] = await getDataFromDB(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`, "Common");
+                // fetch state specific and common questions/answers from database
+                const [{questions : stateSpecificQuestions}] = await getDataFromDB(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`, federalState);
+                const [{questions : commonQuestions}] = await getDataFromDB(`${process.env.REACT_APP_SERVER_HOSTNAME}/api/questions`, "Common");
+
+                // extract correct answers from the question data and store them in an array
+                const stateSpecificAnswers = stateSpecificQuestions.map(question => question.answer);
+                const commonAnswers = commonQuestions.map(question => question.answer);
 
                 // filter common questions based on specified indices
                 const filteredCommonQuestions = commonQuestionIndices.map(index => commonQuestions[index]);
@@ -32,13 +34,14 @@ export const useFetchQuestions = (federalState, commonQuestionIndices, stateSpec
                 const combinedQuestions = filteredCommonQuestions.concat(filteredStateSpecificQuestions);
                 const combinedAnswers = filteredCommonAnswers.concat(filteredStateSpecificAnswers);
 
-                if (combinedQuestions.length > 0) {
+                                if (combinedQuestions.length > 0) {
                     dispatch(startExamination({ questions : combinedQuestions, answers : combinedAnswers }));
                     setData({ isLoading: false, questions: combinedQuestions, answers: combinedAnswers, error: null });
                 } else {
                     throw new Error("No questions found.");
                 }
             } catch (error) {
+                console.log("error occured", error)
                 setData({ ...data, isLoading: false, error: error.message });
             }
         };

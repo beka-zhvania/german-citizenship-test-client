@@ -15,6 +15,7 @@ export default function Questions({ onSelected,federalState}) {
     const resultArray = useSelector(state => state.result.result)
     const { commonQuestionIndices, stateSpecificQuestionIndices } = useSelector(state => state.citizenshipTest)
     const {questions} = useFetchQuestions(federalState, commonQuestionIndices, stateSpecificQuestionIndices);
+    //console.log("questions inside Questions.js", questions);//TODO:DELETE
     const state = useSelector(state => state)
 
 
@@ -23,7 +24,7 @@ export default function Questions({ onSelected,federalState}) {
     let answerToDisplaySelected = resultArray.length > order ? resultArray[order] : '';
     const [selectedOption, setSelectedOption] = useState(answerToDisplaySelected);
     
-    // select question from all questions based on the orded specified in the state
+    // select question from all questions based on the order specified in the state
     //const question  = useSelector(state => state.questions.queue[state.questions.order])
     const question = questions[order]
 
