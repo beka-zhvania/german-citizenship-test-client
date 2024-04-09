@@ -50,7 +50,7 @@ export default function Questions({ onSelected,federalState}) {
         <div className="container mt-sm-2 my-1">
 
             <div className="question ml-sm-5 pl-sm-5 pt-2">
-                <div className="py-2 question-text"><b>Q. {question?.question}</b></div>
+                <div className="py-2 question-text"><b>{question?.question}</b></div>
                 <div className="ml-md-3 ml-sm-3 pl-md-5 pt-sm-0 pt-3" id="options">
                     {question?.options.map((option, i) => (
                         <label className="options" key={i}>

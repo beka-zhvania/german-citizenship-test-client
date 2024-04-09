@@ -25,8 +25,8 @@ export default function Main() {
 
     const handleStartClick = () => {
         // generate indices for random question selection, both for common and state specific questions
-        const commonQuestionIndices = generateUniqueIndices(3, 5);
-        const stateSpecificQuestionIndices = generateUniqueIndices(2, 5);
+        const commonQuestionIndices = generateUniqueIndices(30, 296);
+        const stateSpecificQuestionIndices = generateUniqueIndices(3, 8);
 
         updateCommonQuestionIndices(commonQuestionIndices);
         updateStateSpecificQuestionIndices(stateSpecificQuestionIndices);
