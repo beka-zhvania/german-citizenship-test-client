@@ -5,6 +5,8 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { moveNextQuestion, movePrevQuestion } from '../hooks/FetchQuestions'
 import { pushAnswer, updateResultsBulk } from '../hooks/setResult'
 import { resetResultAction } from '../redux/result_reducer';
+import { useNavigate } from 'react-router-dom';
+import { revokeAccess } from '../redux/access_control_reducer'
 import '../styles/CitizenshipTest.css'; 
 import '../styles/page_with_flag.css'
 
@@ -12,11 +14,14 @@ import '../styles/page_with_flag.css'
 export default function CitizenshipTest() {
 
   const [selected, setSelected] = useState(undefined);
-  const { order, queue, result } = useSelector(state => ({
+  const { order, queue, result, hasAccess } = useSelector(state => ({
       order: state.questions.order,
       queue: state.questions.queue,
       result: state.result.result,
+      hasAccess : state.accessControl.hasAccess
+
   }));
+  const navigate = useNavigate();
   const [redirectToResult, setRedirectToResult] = useState(false); // Added state for redirection
   const dispatch = useDispatch();
   const [progressBarValue, setProgressBarValue] = useState(0);
@@ -42,6 +47,14 @@ export default function CitizenshipTest() {
     const nonNullResultcount = result.filter(value => value !== null).length
     setProgressBarValue(nonNullResultcount)
   }, [result,selected, order, queue])
+
+  // Check if CitizenshipTest page is accessed by clicking the start test button, in which case hasAccess is true, if not, then redirect to main page
+  useEffect(() => {
+    if (!hasAccess) {
+      navigate('/');
+    }
+
+  }, [hasAccess, navigate]);
 
   function onSelected(selected) {
     setSelected(selected)

@@ -2,13 +2,14 @@ import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../styles/Main.css'; 
 import { useCitizenshipTest } from '../hooks/useCitizenshipTest';
+import { grantAccess } from '../redux/access_control_reducer';
+import { useDispatch } from 'react-redux';
 
 export default function Main() {
 
-    const inputRef = useRef(null);
     //const [selectedState, setSelectedState] = useState('');
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const germanStates =["Baden-Württemberg", "Bayern", "Berlin", "Brandenburg", "Bremen", "Hamburg", "Hessen", "Mecklenburg-Vorpommern", "Niedersachsen", "Nordrhein-Westfalen", "Rheinland-Pfalz", "Saarland", "Sachsen", "Sachsen-Anhalt", "Schleswig-Holstein", "Thüringen"];
     const { selectedState, updateSelectedState, commonQuestionIndices, updateCommonQuestionIndices, stateSpecificQuestionIndices, updateStateSpecificQuestionIndices } = useCitizenshipTest(); // use custom hook for citizenship test
     
@@ -24,6 +25,10 @@ export default function Main() {
       
 
     const handleStartClick = () => {
+
+        // grant access to the question page since clicking start button is the correct way for accessing questions
+        dispatch(grantAccess());
+
         // generate indices for random question selection, both for common and state specific questions
         const commonQuestionIndices = generateUniqueIndices(30, 296);
         const stateSpecificQuestionIndices = generateUniqueIndices(3, 8);
